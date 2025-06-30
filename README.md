@@ -40,14 +40,12 @@ O Q-Learning é um algoritmo de **aprendizado por reforço**. O agente interage 
 ### Fórmula de atualização (Equação de Bellman):
 
 ```
-Q(s, a) ← (1 - α) * Q(s, a) + α * (reward + γ * max(Q(s', a')))
+new_value = (1 - alpha) * old_value + alpha * (reward + gamma * next_max)
 ```
 
-- `α` (alpha): taxa de aprendizado
-- `γ` (gamma): fator de desconto
+- `alpha`: taxa de aprendizado
+- `gamma`: fator de desconto
 - `reward`: recompensa recebida
-- `s`, `s'`: estado atual e próximo estado
-- `a`: ação tomada
 
 A Q-table guarda os valores esperados de cada ação em cada estado, e é usada para decidir as ações futuras.
 
