@@ -66,17 +66,17 @@ while len(visited_states) < 96 and episodes < max_total_episodes:
         epsilon = max(min_epsilon, epsilon * decay_rate)
 
         if reward == -100:
-            print("💀 Personagem morreu")
+            print("Personagem morreu")
             break
         elif reward == 300:
-            print("🎯 Objetivo atingido!")
+            print("Objetivo atingido!")
             successes += 1
             break
 
     episodes += 1
 
     if episodes % 10 == 0:
-        print(f"💾 Progresso salvo após {episodes} episódios")
+        print(f"Progresso salvo após {episodes} episódios")
         np.savetxt('resultado.txt', utility_matrix, fmt="%.6f")
 
 print("\nTreinamento encerrado")
