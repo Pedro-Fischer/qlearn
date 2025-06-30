@@ -5,16 +5,16 @@ import numpy as np
 # Conecta ao jogo
 server_socket = connect(2037)
 if server_socket == 0:
-    print("❌ Erro ao conectar com o jogo. Verifique a porta e se o jogo está rodando.")
+    print("Erro ao conectar com o jogo. Verifique a porta e se o jogo está rodando.")
     exit()
 
 # Inicializa Q-table ou carrega existente
 try:
     utility_matrix = np.loadtxt('resultado.txt')
-    print("✅ Q-table carregada de 'resultado.txt'")
+    print("Q-table carregada de 'resultado.txt'")
 except:
     utility_matrix = np.zeros((96, 3))
-    print("📄 Q-table nova criada")
+    print("Q-table nova criada")
 
 np.set_printoptions(precision=6)
 actions = ["left", "right", "jump"]
@@ -33,7 +33,7 @@ visited_states = set()
 max_total_episodes = 5000
 
 while len(visited_states) < 96 and episodes < max_total_episodes:
-    print(f"\n🌱 Episódio {episodes + 1}")
+    print(f"\nEpisódio {episodes + 1}")
     state_info, reward = get_state_reward(server_socket, "jump")
     state = int(state_info[2:], 2)
     total_reward = 0
@@ -79,11 +79,11 @@ while len(visited_states) < 96 and episodes < max_total_episodes:
         print(f"💾 Progresso salvo após {episodes} episódios")
         np.savetxt('resultado.txt', utility_matrix, fmt="%.6f")
 
-print("\n🏁 Treinamento encerrado")
+print("\nTreinamento encerrado")
 print(f"Total de episódios: {episodes}")
 print(f"Estados cobertos: {len(visited_states)}/96")
 print(f"Taxa de sucesso: {(successes / episodes) * 100:.2f}%")
 
 # Salvar Q-table final
 np.savetxt('resultado.txt', utility_matrix, fmt="%.6f")
-print("✅ Q-table final salva com sucesso.")
+print("Q-table final salva com sucesso.")
