@@ -42,6 +42,7 @@ while len(visited_states) < 96 and episodes < max_total_episodes:
         visited_states.add(state)
         print(f"Estado atual: {state} | Estados cobertos: {len(visited_states)}/96")
 
+        # Escolha de ação com ε-greedy
         if random.random() < epsilon:
             action_index = random.randint(0, 2)
             chosen_action = actions[action_index]
@@ -49,6 +50,7 @@ while len(visited_states) < 96 and episodes < max_total_episodes:
             action_index = np.argmax(utility_matrix[state])
             chosen_action = actions[action_index]
 
+        # Execução da ação
         state_info, reward = get_state_reward(server_socket, chosen_action)
         next_state = int(state_info[2:], 2)
         visited_states.add(next_state)
@@ -65,6 +67,7 @@ while len(visited_states) < 96 and episodes < max_total_episodes:
         # Atualiza epsilon
         epsilon = max(min_epsilon, epsilon * decay_rate)
 
+        # Condições de parada
         if reward == -100:
             print("Personagem morreu")
             break
@@ -75,6 +78,7 @@ while len(visited_states) < 96 and episodes < max_total_episodes:
 
     episodes += 1
 
+    # Progresso e encerramento
     if episodes % 10 == 0:
         print(f"Progresso salvo após {episodes} episódios")
         np.savetxt('resultado.txt', utility_matrix, fmt="%.6f")
